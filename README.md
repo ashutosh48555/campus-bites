@@ -52,10 +52,10 @@ A database containing pre-generated test data is already included. You can log i
 **Admin**
 - `admin@campus.com` / `Admin@123`
 
-**Shop Owners (Fully Populated Menus)**
-- Shop 1 (Cafe): `cafe@campus.com` / `Owner@123`
-- Shop 2 (Chinese): `wok@campus.com` / `Owner@123`
-- Shop 3 (Healthy): `healthy@campus.com` / `Owner@123`
+**Shop Owners (Fully Populated Indian Menus)**
+- The Indian Canteen: `canteen@campus.com` / `Owner@123`
+- South Indian Express: `south@campus.com` / `Owner@123`
+- Campus Maggie & Rolls: `maggie@campus.com` / `Owner@123`
 
 **Student / Customer**
 - `student@campus.com` / `Student@123`

@@ -17,10 +17,10 @@ A script has been run to pre-generate test users for you. Use these credentials 
    - Email: `admin@campus.com`
    - Password: `Admin@123`
 
-2. **Shop Owners (3 fully-populated shops)**
-   - **Campus Central Cafe:** `cafe@campus.com` / `Owner@123`
-   - **The Spicy Wok:** `wok@campus.com` / `Owner@123`
-   - **Healthy Greens:** `healthy@campus.com` / `Owner@123`
+2. **Shop Owners (3 Authentic Indian Shops)**
+   - **The Indian Canteen:** `canteen@campus.com` / `Owner@123`
+   - **South Indian Express:** `south@campus.com` / `Owner@123`
+   - **Campus Maggie & Rolls:** `maggie@campus.com` / `Owner@123`
 
 3. **College Student**
    - Email: `student@campus.com`
