@@ -48,9 +48,17 @@ See [PROJECT_REVIEW.md](PROJECT_REVIEW.md) for detailed list of fixes.
 ## Setup Test Data
 
 A database containing pre-generated test data is already included. You can log in using:
-- **Admin**: `admin@campus.com` / `Admin@123`
-- **Shop Owner**: `shop@campus.com` / `Owner@123`
-- **Student**: `student@campus.com` / `Student@123`
+
+**Admin**
+- `admin@campus.com` / `Admin@123`
+
+**Shop Owners (Fully Populated Menus)**
+- Shop 1 (Cafe): `cafe@campus.com` / `Owner@123`
+- Shop 2 (Chinese): `wok@campus.com` / `Owner@123`
+- Shop 3 (Healthy): `healthy@campus.com` / `Owner@123`
+
+**Student / Customer**
+- `student@campus.com` / `Student@123`
 
 See [ADMIN_SETUP_GUIDE.md](ADMIN_SETUP_GUIDE.md) for detailed instructions on creating new test shops, menu items, and users manually.
 

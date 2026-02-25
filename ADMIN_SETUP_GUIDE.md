@@ -17,10 +17,10 @@ A script has been run to pre-generate test users for you. Use these credentials 
    - Email: `admin@campus.com`
    - Password: `Admin@123`
 
-2. **Shop Owner**
-   - Email: `shop@campus.com`
-   - Password: `Owner@123`
-   *(Pre-linked to "Campus Central Cafe")*
+2. **Shop Owners (3 fully-populated shops)**
+   - **Campus Central Cafe:** `cafe@campus.com` / `Owner@123`
+   - **The Spicy Wok:** `wok@campus.com` / `Owner@123`
+   - **Healthy Greens:** `healthy@campus.com` / `Owner@123`
 
 3. **College Student**
    - Email: `student@campus.com`
