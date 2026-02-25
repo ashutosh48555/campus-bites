@@ -9,13 +9,34 @@
 
 ---
 
-## Option A: Create a Shop Owner User (Manual)
+## Option A: Use Pre-Generated Test Users
+
+A script has been run to pre-generate test users for you. Use these credentials to test the application immediately:
+
+1. **Admin User**
+   - Email: `admin@campus.com`
+   - Password: `Admin@123`
+
+2. **Shop Owner**
+   - Email: `shop@campus.com`
+   - Password: `Owner@123`
+   *(Pre-linked to "Campus Central Cafe")*
+
+3. **College Student**
+   - Email: `student@campus.com`
+   - Password: `Student@123`
+
+If you would rather create users manually, follow Option B below.
+
+---
+
+## Option B: Create a Shop Owner User (Manual)
 
 ### Step 1: Create a User
 1. Go to **Users** section
 2. Click **Add User**
 3. Enter:
-   - **Username**: `shopowner1` (or any name)
+   - **Username**: `shopowner1@campus.com` (Use an email format)
    - **Password**: (set any password)
    - **Confirm password**: (same as above)
 4. Click **Save**
@@ -87,12 +108,11 @@
 ## Step 7: Test Complete Flow as a College User
 
 1. **Log out** from shop owner account
-2. Go to register: `http://127.0.0.1:8000/accounts/register/`
-3. Create a college user:
-   - **Full name**: `John Student`
-   - **Email**: `john@college.com`
-   - **College ID**: `CSE2024001`
-   - **Password**: (any password)
+2. Go to register: `http://127.0.0.1:8000/accounts/login/`
+3. Log in as the pre-generated college user:
+   - **Email**: `student@campus.com`
+   - **Password**: `Student@123`
+   *(Or you can register a new one manually)*
 4. You will be logged in automatically
 5. Click on **Campus Cafe** to view menu
 6. Add items to cart

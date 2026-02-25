@@ -47,7 +47,12 @@ See [PROJECT_REVIEW.md](PROJECT_REVIEW.md) for detailed list of fixes.
 
 ## Setup Test Data
 
-See [ADMIN_SETUP_GUIDE.md](ADMIN_SETUP_GUIDE.md) for detailed instructions on creating test shops, menu items, and users.
+A database containing pre-generated test data is already included. You can log in using:
+- **Admin**: `admin@campus.com` / `Admin@123`
+- **Shop Owner**: `shop@campus.com` / `Owner@123`
+- **Student**: `student@campus.com` / `Student@123`
+
+See [ADMIN_SETUP_GUIDE.md](ADMIN_SETUP_GUIDE.md) for detailed instructions on creating new test shops, menu items, and users manually.
 
 ## Notes
 
