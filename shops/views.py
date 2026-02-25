@@ -65,7 +65,7 @@ def search_menu(request):
 def owner_dashboard(request):
     shop = get_object_or_404(Shop, owner=request.user)
     today_orders = (
-        Order.objects.filter(shop=shop, pickup_time__date=date.today())
+        Order.objects.filter(shop=shop, pickup_time__date=timezone.localdate())
         .select_related("user", "user__profile")
         .prefetch_related("items__menu_item")
         .order_by("pickup_time")

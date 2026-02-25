@@ -1186,9 +1186,9 @@ elif order.status == CANCELLED:
 
 | Event | Created By | Sent To | Type | Link |
 |-------|-----------|---------|------|------|
-| Order placed | `checkout()` | Shop Owner | `order_placed` | `/shops/owner/dashboard/` |
-| Order cancelled | `cancel_order()` | Shop Owner | `order_cancelled` | `/shops/owner/dashboard/` |
-| Pickup time extended | `extend_pickup_time()` | Shop Owner | `time_extended` | `/shops/owner/dashboard/` |
+| Order placed | `checkout()` | Shop Owner | `order_placed` | `/owner/dashboard/` |
+| Order cancelled | `cancel_order()` | Shop Owner | `order_cancelled` | `/owner/dashboard/` |
+| Pickup time extended | `extend_pickup_time()` | Shop Owner | `time_extended` | `/owner/dashboard/` |
 | Status → Preparing | `update_status()` | Customer | `order_preparing` | `/orders/` |
 | Status → Ready | `update_status()` | Customer | `order_ready` | `/orders/` |
 | Status → Collected | `update_status()` | Customer | `order_completed` | `/orders/` |

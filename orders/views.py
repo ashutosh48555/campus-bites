@@ -194,7 +194,7 @@ def checkout(request):
                     notification_type=Notification.NOTIFICATION_ORDER_PLACED,
                     title=f"New Order #{order.id}",
                     message=f"{request.user.username} placed an order for ₹{order.total_price}. Pickup at {pickup_time.strftime('%I:%M %p')}.",
-                    link=f"/shops/owner/dashboard/"
+                    link=f"/owner/dashboard/"
                 )
                 
         except IntegrityError:
@@ -241,7 +241,7 @@ def cancel_order(request, order_id):
             notification_type=Notification.NOTIFICATION_ORDER_CANCELLED,
             title=f"Order #{order.id} Cancelled",
             message=f"{request.user.username} cancelled their order for ₹{order.total_price}.",
-            link=f"/shops/owner/dashboard/"
+            link=f"/owner/dashboard/"
         )
         
         messages.success(request, "Order cancelled successfully.")
@@ -289,7 +289,7 @@ def extend_pickup_time(request, order_id):
                     notification_type=Notification.NOTIFICATION_TIME_EXTENDED,
                     title=f"Order #{order.id} Time Extended",
                     message=f"{request.user.username} extended pickup time to {new_pickup_time.strftime('%I:%M %p')}.",
-                    link=f"/shops/owner/dashboard/"
+                    link=f"/owner/dashboard/"
                 )
                 
                 messages.success(request, f"Pickup time extended to {new_pickup_time.strftime('%B %d, %Y at %I:%M %p')}.")
