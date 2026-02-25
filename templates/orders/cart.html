@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-3xl font-semibold mb-6">Your Cart</h1>
+{% if items %}
+    <div class="space-y-4">
+        {% for entry in items %}
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-wrap justify-between gap-4 items-center">
+                <div>
+                    <h3 class="font-semibold text-lg">{{ entry.item.name }}</h3>
+                    <p class="text-sm text-slate-600">Price: ₹{{ entry.item.price }}</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center border border-slate-300 rounded-full">
+                        <form method="get" action="{% url 'orders:update_cart_qty' entry.item.id %}" style="display: inline;">
+                            <button type="submit" name="action" value="decrease" class="px-3 py-1">−</button>
+                        </form>
+                        <span class="px-3 py-1 min-w-[2rem] text-center">{{ entry.quantity }}</span>
+                        <form method="get" action="{% url 'orders:update_cart_qty' entry.item.id %}" style="display: inline;">
+                            <button type="submit" name="action" value="increase" class="px-3 py-1">+</button>
+                        </form>
+                    </div>
+                    <span class="font-semibold text-teal-700 min-w-[5rem] text-right">₹{{ entry.line_total }}</span>
+                    <form method="post" action="{% url 'orders:remove_from_cart' entry.item.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="text-red-600 text-sm underline">Remove</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="mt-6 flex flex-wrap justify-between items-center gap-3 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <span class="text-lg font-semibold">Total: ₹{{ total }}</span>
+        <a href="{% url 'orders:checkout' %}" class="bg-slate-900 text-white px-5 py-2 rounded-full">Checkout</a>
+    </div>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+{% endblock %}

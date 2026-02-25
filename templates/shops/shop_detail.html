@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-8 bg-white/90 border border-slate-200 rounded-2xl p-6 shadow-sm">
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="text-3xl font-semibold">{{ shop.name }}</h1>
+            <p class="text-slate-600 mt-2">{{ shop.description }}</p>
+            {% if shop.address %}
+                <p class="text-sm text-slate-500 mt-3">{{ shop.address }}</p>
+            {% endif %}
+        </div>
+        <a href="{% url 'orders:cart' %}" class="bg-teal-700 text-white px-4 py-2 rounded-full text-sm">View Cart ({{ cart_items_count }})</a>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-4 text-xs text-slate-600">
+        <span class="bg-slate-100 px-3 py-1 rounded-full">{{ shop.opening_time }} - {{ shop.closing_time }}</span>
+        <span class="bg-slate-100 px-3 py-1 rounded-full">{{ shop.max_orders_per_slot }} orders / slot</span>
+    </div>
+</div>
+<div class="grid md:grid-cols-4 gap-6">
+    {% for item in items %}
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+            {% if item.image %}
+                <div class="mb-4">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-full h-48 object-cover rounded-lg">
+                </div>
+            {% endif %}
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="font-semibold text-lg">{{ item.name }}</h3>
+                    {% if item.category %}
+                        <span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">{{ item.category.name }}</span>
+                    {% endif %}
+                    <p class="text-sm text-slate-600 mt-1">{{ item.description }}</p>
+                </div>
+                <span class="text-sm font-semibold text-teal-700">₹{{ item.price }}</span>
+            </div>
+            <div class="mt-4 flex items-center gap-3">
+                <div class="flex items-center border border-slate-300 rounded-full">
+                    <button class="px-3 py-1 quantity-btn" data-item="{{ item.id }}" data-action="decrease">−</button>
+                    <input type="number" id="qty_{{ item.id }}" class="w-12 text-center border-none" value="1" min="1" max="10">
+                    <button class="px-3 py-1 quantity-btn" data-item="{{ item.id }}" data-action="increase">+</button>
+                </div>
+                <button type="button" class="bg-slate-900 text-white px-4 py-2 rounded-full text-sm add-to-cart-btn" data-item="{{ item.id }}">Add to cart</button>
+            </div>
+        </div>
+    {% empty %}
+        <p>No items available.</p>
+    {% endfor %}
+</div>
+<script>
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const itemId = e.target.dataset.item;
+            const action = e.target.dataset.action;
+            const input = document.getElementById(`qty_${itemId}`);
+            let val = parseInt(input.value) || 1;
+            if (action === 'increase') val = Math.min(val + 1, 10);
+            if (action === 'decrease') val = Math.max(val - 1, 1);
+            input.value = val;
+        });
+    });
+
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const itemId = e.target.dataset.item;
+            const qty = parseInt(document.getElementById(`qty_${itemId}`).value) || 1;
+            const currentUrl = new URL(window.location);
+            const newUrl = `{% url 'orders:add_to_cart' 0 %}`.replace('0', itemId) + `?qty=${qty}`;
+            window.location.href = newUrl;
+        });
+    });
+</script>
+{% endblock %}

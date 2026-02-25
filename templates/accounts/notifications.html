@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold text-slate-800">Notifications</h1>
+        {% if unread_count > 0 %}
+            <form method="post" action="{% url 'accounts:mark_all_read' %}">
+                {% csrf_token %}
+                <button type="submit" class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition text-sm font-semibold">
+                    Mark All as Read
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if notifications %}
+        <div class="space-y-3">
+            {% for notification in notifications %}
+                <a href="{% url 'accounts:mark_notification_read' notification.id %}" 
+                   class="block bg-white rounded-lg shadow-sm border {% if not notification.is_read %}border-teal-200 bg-teal-50/30{% else %}border-slate-200{% endif %} hover:shadow-md transition-all">
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <!-- Notification Icon based on type -->
+                                    <span class="text-xl">
+                                        {% if notification.notification_type == 'order_placed' %}📝
+                                        {% elif notification.notification_type == 'order_preparing' %}👨‍🍳
+                                        {% elif notification.notification_type == 'order_ready' %}✅
+                                        {% elif notification.notification_type == 'order_completed' %}🎉
+                                        {% elif notification.notification_type == 'order_cancelled' %}❌
+                                        {% elif notification.notification_type == 'feedback_received' %}⭐
+                                        {% elif notification.notification_type == 'time_extended' %}⏰
+                                        {% else %}🔔
+                                        {% endif %}
+                                    </span>
+                                    <h3 class="font-semibold text-slate-800">{{ notification.title }}</h3>
+                                    {% if not notification.is_read %}
+                                        <span class="px-2 py-0.5 bg-teal-600 text-white text-xs rounded-full font-semibold">New</span>
+                                    {% endif %}
+                                </div>
+                                <p class="text-sm text-slate-600 ml-7">{{ notification.message }}</p>
+                                <p class="text-xs text-slate-400 ml-7 mt-1">
+                                    {{ notification.created_at|timesince }} ago
+                                </p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-12 text-center">
+            <div class="text-6xl mb-4">🔔</div>
+            <h3 class="text-xl font-semibold text-slate-800 mb-2">No Notifications</h3>
+            <p class="text-slate-600">You're all caught up! Check back later for updates.</p>
+        </div>
+    {% endif %}
+
+    <!-- Quick Stats -->
+    <div class="mt-8 grid grid-cols-2 gap-4">
+        <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
+            <div class="text-2xl font-bold text-teal-600">{{ notifications|length }}</div>
+            <div class="text-sm text-slate-600">Total Notifications</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
+            <div class="text-2xl font-bold text-amber-600">{{ unread_count }}</div>
+            <div class="text-sm text-slate-600">Unread</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

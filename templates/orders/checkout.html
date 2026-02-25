@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-3xl font-semibold mb-6">Checkout - {{ shop.name }}</h1>
+<div class="grid md:grid-cols-2 gap-6">
+    <!-- Checkout Form -->
+    <form method="post" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="w-full bg-slate-900 text-white py-2 rounded-full" type="submit">Place order</button>
+    </form>
+
+    <!-- Payment Details -->
+    {% if payment_config %}
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="font-semibold text-lg mb-4">Payment Details for Online Orders</h2>
+            
+            {% if payment_config.upi_id %}
+                <div class="mb-4 pb-4 border-b">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-500">UPI Payment</p>
+                    <p class="text-lg font-semibold text-teal-700 mt-1">{{ payment_config.upi_id }}</p>
+                </div>
+            {% endif %}
+
+            {% if payment_config.bank_name %}
+                <div class="mb-4 pb-4 border-b">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Bank Transfer</p>
+                    <div class="text-sm mt-2 space-y-1">
+                        <p><span class="text-slate-600">Account Holder:</span> {{ payment_config.account_holder_name }}</p>
+                        <p><span class="text-slate-600">Bank:</span> {{ payment_config.bank_name }}</p>
+                        <p><span class="text-slate-600">Account:</span> {{ payment_config.account_number }}</p>
+                        <p><span class="text-slate-600">IFSC:</span> {{ payment_config.ifsc_code }}</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if payment_config.qr_code %}
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-500 mb-2">QR Code</p>
+                    <img src="{{ payment_config.qr_code.url }}" alt="Payment QR Code" class="w-32 h-32 border border-slate-200 rounded">
+                </div>
+            {% endif %}
+
+            <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+                <strong>Note:</strong> Send payment using details above and mention your Order ID in the transaction reference.
+            </div>
+        </div>
+    {% else %}
+        <div class="bg-slate-100 p-6 rounded-2xl border border-slate-300 text-center">
+            <p class="text-slate-600">Payment details not configured yet. Contact shop owner.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

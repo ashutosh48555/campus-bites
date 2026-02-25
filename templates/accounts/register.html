@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+    <h1 class="text-2xl font-semibold mb-4">Register as Student</h1>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="w-full bg-slate-900 text-white py-2 rounded-full" type="submit">Create account</button>
+    </form>
+    <p class="text-sm mt-4">
+        Already have an account? <a href="{% url 'accounts:login' %}" class="text-teal-700 underline">Login</a><br>
+        Want to register as a shop owner? <a href="{% url 'accounts:register_shop_owner' %}" class="text-amber-700 underline font-semibold">Register Shop</a>
+    </p>
+</div>
+{% endblock %}

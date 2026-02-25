@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>campus-bites</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand-ink: #0f172a;
+            --brand-accent: #0f766e;
+            --brand-warm: #f59e0b;
+        }
+        body {
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+        }
+        .logout-btn {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: inherit;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            color: #0f766e;
+        }
+        .notification-bell {
+            position: relative;
+            display: inline-block;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc2626;
+            color: white;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-amber-50 via-slate-50 to-teal-50 text-slate-900">
+    <nav class="bg-white/80 backdrop-blur border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="{% url 'shops:list' %}" class="text-xl font-semibold tracking-wide">campus-bites</a>
+            <div class="flex gap-5 text-sm font-semibold items-center">
+                {% if user.is_authenticated %}
+                    {% if user.profile.role == 'shop_owner' %}
+                        <a href="{% url 'shops:owner_dashboard' %}" class="hover:text-teal-700">Dashboard</a>
+                        <a href="{% url 'shops:analytics' %}" class="hover:text-teal-700">Analytics</a>
+                    {% else %}
+                        <a href="{% url 'shops:list' %}" class="hover:text-teal-700">Home</a>
+                        <a href="{% url 'orders:list' %}" class="hover:text-teal-700">My Orders</a>
+                        <a href="{% url 'orders:feedback_list' %}" class="hover:text-teal-700">My Feedback</a>
+                    {% endif %}
+                    
+                    <!-- Profile Link -->
+                    <a href="{% url 'accounts:profile' %}" class="hover:text-teal-700" title="My Profile">
+                        <span style="font-size: 1.25rem;">👤</span>
+                    </a>
+                    
+                    <!-- Notification Bell -->
+                    <a href="{% url 'accounts:notifications' %}" class="notification-bell hover:text-teal-700" title="Notifications">
+                        <span style="font-size: 1.25rem;">🔔</span>
+                        {% if unread_notifications_count > 0 %}
+                            <span class="notification-badge">{{ unread_notifications_count }}</span>
+                        {% endif %}
+                    </a>
+                    
+                    <form method="post" action="{% url 'accounts:logout' %}" style="display: inline; margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="hover:text-teal-700">Login</a>
+                    <a href="{% url 'accounts:register' %}" class="hover:text-teal-700">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                    <div class="p-3 rounded bg-white shadow text-sm border border-slate-200">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

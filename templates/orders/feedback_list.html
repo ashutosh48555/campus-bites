@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-3xl font-semibold">Feedback</h1>
+    <p class="text-slate-600 mt-2">
+        {% if user.profile.role == 'shop_owner' %}
+            Customer reviews and ratings for your shop
+        {% else %}
+            Your feedback history
+        {% endif %}
+    </p>
+</div>
+
+<div class="space-y-4">
+    {% for feedback in feedbacks %}
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+            <div class="flex items-start justify-between mb-3">
+                <div>
+                    <h3 class="font-semibold text-lg">{{ feedback.shop.name }}</h3>
+                    {% if user.profile.role == 'shop_owner' %}
+                        <p class="text-sm text-slate-600">By: {{ feedback.user.first_name|default:feedback.user.username }}</p>
+                    {% endif %}
+                    <p class="text-xs text-slate-500">{{ feedback.created_at|date:"F d, Y at g:i A" }}</p>
+                </div>
+                <div class="flex items-center gap-1 text-amber-500 text-lg">
+                    {% for i in "x"|rjust:feedback.rating %}★{% endfor %}
+                    {% for i in "x"|rjust:5|slice:feedback.rating %}☆{% endfor %}
+                    <span class="text-sm text-slate-600 ml-2">({{ feedback.rating }}/5)</span>
+                </div>
+            </div>
+            
+            {% if feedback.comment %}
+                <div class="mt-3 p-3 bg-slate-50 rounded-lg">
+                    <p class="text-sm text-slate-700">"{{ feedback.comment }}"</p>
+                </div>
+            {% endif %}
+            
+            {% if feedback.order %}
+                <div class="mt-3 pt-3 border-t border-slate-200">
+                    <p class="text-xs text-slate-500">
+                        Order #{{ feedback.order.token_number }} • ₹{{ feedback.order.total_price }}
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="bg-white border border-slate-200 rounded-2xl p-12 text-center">
+            <div class="text-6xl mb-4">💬</div>
+            <h3 class="text-xl font-semibold text-slate-700">No feedback yet</h3>
+            <p class="text-slate-600 mt-2">
+                {% if user.profile.role == 'shop_owner' %}
+                    Customer feedback will appear here once they rate their orders.
+                {% else %}
+                    Submit feedback after collecting your orders to see them here.
+                {% endif %}
+            </p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
