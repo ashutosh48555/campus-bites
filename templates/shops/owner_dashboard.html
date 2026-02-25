@@ -105,7 +105,7 @@
                             <select name="status"
                                 class="text-xs border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-teal-500 focus:border-transparent">
                                 {% for value, label in order.STATUS_CHOICES %}
-                                <option value="{{ value }}" {% if order.status==value %}selected{% endif %}>{{ label }}
+                                <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>{{ label }}
                                 </option>
                                 {% endfor %}
                             </select>
