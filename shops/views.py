@@ -64,8 +64,17 @@ def search_menu(request):
 @shop_owner_required
 def owner_dashboard(request):
     shop = get_object_or_404(Shop, owner=request.user)
+    
+    # Display all active orders ALWAYS, plus any completed/cancelled orders meant for today
+    today = timezone.localdate()
     today_orders = (
-        Order.objects.filter(shop=shop, pickup_time__date=timezone.localdate())
+        Order.objects.filter(
+            Q(shop=shop) & 
+            (
+                Q(status__in=[Order.STATUS_PENDING, Order.STATUS_PREPARING, Order.STATUS_READY]) | 
+                Q(pickup_time__date=today)
+            )
+        )
         .select_related("user", "user__profile")
         .prefetch_related("items__menu_item")
         .order_by("pickup_time")
